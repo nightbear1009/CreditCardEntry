@@ -31,10 +31,10 @@ import android.widget.TextView;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.View.OnClickListener;
 
 
-
-public class CreditCardView extends LinearLayout implements OnTouchListener, CardNumberListener, ExpDateListener, SecurityListener, CreditCardFieldDelegate  {
+public class CreditCardView extends LinearLayout implements OnTouchListener, CardNumberListener, ExpDateListener, SecurityListener, CreditCardFieldDelegate, OnClickListener  {
 	private HorizontalScrollView mScrollview;
 	private CreditCardNumberView mNum;
 	private TextView mFourDigit;	
@@ -84,7 +84,7 @@ public class CreditCardView extends LinearLayout implements OnTouchListener, Car
 		mNum = (CreditCardNumberView)horizontalview.findViewById(R.id.creditcard_num);
 		mNum.setCardNumberListener(this);
 		
-		mFourDigit = (TextView)horizontalview.findViewById(R.id.four_digit);
+		mFourDigit = (TextView)horizontalview.findViewById(R.id.four_digit);		
 		mExpireDate = (ExpDateText)horizontalview.findViewById(R.id.expire_date);
 		mExpireDate.setOnExpDateListener(this);
 		mSecurity = (SecurityCodeText)horizontalview.findViewById(R.id.security_code);		
@@ -92,6 +92,7 @@ public class CreditCardView extends LinearLayout implements OnTouchListener, Car
 		mScrollview.addView(horizontalview);
 		
 		mNum.setDelegate(this);
+		mFourDigit.setOnClickListener(this);
 		mExpireDate.setDelegate(this);
 		mSecurity.setDelegate(this);
 		mNum.requestFocus();
@@ -224,6 +225,11 @@ public class CreditCardView extends LinearLayout implements OnTouchListener, Car
 					base.setTextColor(Color.BLACK);
 				}
 			}, 1000);
+	}
+
+	@Override
+	public void onClick(View v) {		
+		focusOnField(mNum);
 	}
 
 
